@@ -1,0 +1,166 @@
+Q-1.To Automate Facebook Sign Up Process using selenium script upto step-10 told by mentor.
+
+
+package WorkTask;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class FacebookLoginAutomation {
+
+	public static void main(String[] args) throws InterruptedException {
+			// To Initialize the browser
+				WebDriverManager.chromedriver().setup();
+				WebDriver driver=new ChromeDriver();
+				
+			//to maximize and delete cookies
+				driver.manage().window().maximize();
+				driver.manage().deleteAllCookies();
+				
+			//Navigate to Web page
+				driver.get("https://www.facebook.com/");		
+				Thread.sleep(1000);
+				
+			//To Verify the Website Redirected to Homepage or Not	
+				String Expectedtitle = driver.getTitle();
+				System.out.println("Title of the Homepage is = "+Expectedtitle);
+		        String actualtitle = "Facebook – log in or sign up";
+		    //Use if else method    
+		           if (actualtitle.contentEquals(Expectedtitle)){
+		                System.out.println("Website Redirected to Homepage Succesfully");
+		            } else {
+		                System.out.println("Website Not Redirected to Homepage Succesfully");
+		            }
+		        Thread.sleep(1000);
+		        
+			//To Click Create Account Button	
+				WebElement CreateAccountButton=driver.findElement(By.xpath("//form/div[5]/a"));
+				CreateAccountButton.click();
+				Thread.sleep(2000);
+				
+			//To Enter the Details in the form
+				WebElement FirstnameField = driver.findElement(By.xpath("//input[@name='firstname']"));
+		        FirstnameField.sendKeys("Test");
+		        Thread.sleep(1000);
+		        
+		        WebElement LastnameField = driver.findElement(By.xpath("//input[@name='lastname']"));
+		        LastnameField.sendKeys("User");
+		        Thread.sleep(2000);
+		        
+		        WebElement EmailField = driver.findElement(By.xpath("//input[@name='reg_email__']"));      
+		        EmailField.sendKeys("testuser@test.com");
+		        Thread.sleep(1000);
+		        
+		        WebElement ReEnterEmailField = driver.findElement(By.xpath("//input[@name='reg_email_confirmation__']"));      
+		        ReEnterEmailField.sendKeys("testuser@test.com");
+		        Thread.sleep(1000);
+		        
+		        WebElement PasswordField = driver.findElement(By.xpath("//input[@id='password_step_input']"));
+		        PasswordField.sendKeys("@123456*");
+		        Thread.sleep(1000);
+		        
+		    //To select day,Month, Year using dropdown method
+		        WebElement selectdate=driver.findElement(By.id("day"));
+				Select dropdown=new Select(selectdate);
+				dropdown.selectByValue("11");
+								
+				WebElement selectMonth=driver.findElement(By.id("month"));
+				Select dropdown1=new Select(selectMonth);
+				dropdown1.selectByValue("5");
+								
+				WebElement selectYear=driver.findElement(By.id("year"));
+				Select dropdown2=new Select(selectYear);
+				dropdown2.selectByValue("1985");
+				
+			//To Click the Male RadioButton	by using Value				
+				WebElement MaleRadioButton=driver.findElement(By.xpath("//input[@value='2']"));
+				MaleRadioButton.click();
+				Thread.sleep(1000);
+				
+			//To Click Sign Up Button
+				WebElement SignupButton=driver.findElement(By.name("websubmit"));
+				SignupButton.click();
+				Thread.sleep(2000);
+				
+			//To Close the Browser
+				driver.close();
+	}
+
+}
+
+* Unable to Verify the User Succefully Registered and Redirected to Facebook Homepage because of all are using same Content.
+* So, Mentor Told upto Complete Step 10 for this task.
+
+Output = Title of the Homepage is = Facebook – log in or sign up
+	 Website Redirected to Homepage Succesfully
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Q-2. To Automate the Drag and Drop Operation using Selenium Java
+
+package WorkTask;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class DragandDropTask {
+
+	public static void main(String[] args) throws InterruptedException {
+	  // To Initialize the browser
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver=new ChromeDriver();
+		
+	  //To maximize and delete cookies
+		driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
+		
+	  //Navigate to Web page
+		driver.get("https://jqueryui.com/droppable/");		
+		Thread.sleep(1000);
+	  //To Switch to frame using webelement method
+		WebElement iframe=driver.findElement(By.xpath("//iframe[@class='demo-frame']"));
+		driver.switchTo().frame(iframe);
+		Thread.sleep(1000);
+		
+	  //To perform Drag and Drop Operation	
+		WebElement drag=driver.findElement(By.id("draggable"));
+	    	WebElement drop=driver.findElement(By.id("droppable"));
+	  //To verify the operation by checking color Before
+	    	String colourBeforeDrop = drop.getCssValue("color");
+	    	System.out.println("Color Before Dropped: "+ colourBeforeDrop);
+	  //create an instance of Actions class to drag and drop
+	    	Actions action=new Actions(driver);
+	    	action.dragAndDrop(drag, drop).build().perform();
+	    	Thread.sleep(1000);
+	  //To verify the operation by checking color After  
+	    	String colorAfterDrop = drop.getCssValue("color");
+	    	System.out.println("Color after Dropped: "+ colorAfterDrop);
+	  //To Verify the Text Change to Dropped
+	    	String Text = drop.getText();
+	    	if(Text.equals("Dropped!")) {
+			System.out.println("Target Element change to 'Dropped!'");
+		}else {
+			System.out.println("Target Element Not change to 'Dropped!'");
+		}
+	    	Thread.sleep(1000);
+	  //To Close the Browser Driver  
+	    	driver.close();
+
+	}
+
+}
+
+
+Output= 
+
+	Color Before Dropped: rgba(51, 51, 51, 1)
+	Color after Dropped: rgba(119, 118, 32, 1)
+	Target Element Text change to 'Dropped!'
